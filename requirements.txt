@@ -1,2 +1,5 @@
+protobuf
+groq
+cohere
 google-genai
 python-dotenv

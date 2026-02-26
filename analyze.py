@@ -1,118 +1,153 @@
 """
 Script to analyze customer support chats from a JSON dataset.
+Uses a fallback strategy: Google Gemini -> Groq -> Cohere.
 Outputs a new JSON file with intent, satisfaction, quality_score, and agent_mistakes.
 """
 
-import os
 import json
+import os
 import time
+
+import cohere
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from dotenv import load_dotenv
+from groq import Groq
 
 
-def setup_ai():
+def setup_environment():
     """
-    Loads environment variables and initializes the GenAI client.
-    Returns the configured client or None if the API key is missing.
+    Loads environment variables from the .env file.
+    Must be called before initializing any API clients.
     """
     load_dotenv(override=True)
-    if not os.getenv("GOOGLE_API_KEY"):
-        print("Error: GOOGLE_API_KEY is missing in the .env file!")
-        return None
-    return genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
-def analyze_chat(client, chat_text: str) -> dict:
+def analyze_chat_with_fallback(chat_text: str) -> dict:
     """
-    Analyzes a single customer support chat using Gemini 2.0 Flash.
-    Safety filters are explicitly disabled to process angry or sarcastic customer messages.
+    Analyzes a single customer support chat using multiple API providers.
+    Uses Cohere V2 API for the final fallback.
     Returns a dictionary containing intent, satisfaction, quality score, and mistakes.
     """
     system_prompt = """
     Analyze the chat and return EXACTLY a JSON object with these keys:
     - "intent": (payment_issue, technical_error, account_access, tariff_question, refund_request, or other)
-    - "satisfaction": (satisfied, neutral, or unsatisfied). Pay attention to sarcasm or hidden dissatisfaction!
+    - "satisfaction": (satisfied, neutral, or unsatisfied). Pay attention to sarcasm!
     - "quality_score": (integer 1 to 5)
     - "agent_mistakes": (list: ignored_question, incorrect_info, rude_tone, no_resolution, unnecessary_escalation. Leave empty [] if none)
     """
 
-    # Disable safety filters so the AI doesn't block rude/sarcastic test chats
-    safety_settings = [
-        types.SafetySetting(
-            category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            threshold=types.HarmBlockThreshold.BLOCK_NONE,
-        ),
-        types.SafetySetting(
-            category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold=types.HarmBlockThreshold.BLOCK_NONE,
-        ),
-        types.SafetySetting(
-            category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-            threshold=types.HarmBlockThreshold.BLOCK_NONE,
-        ),
-        types.SafetySetting(
-            category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-            threshold=types.HarmBlockThreshold.BLOCK_NONE,
-        ),
-    ]
+    # Step 1: Try Google Gemini
+    try:
+        print("  -> Attempting with Google Gemini...")
+        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-    response = client.models.generate_content(
-        model='gemini-2.0-flash',
-        contents=chat_text,
-        config=types.GenerateContentConfig(
-            system_instruction=system_prompt,
-            temperature=0.0,
-            response_mime_type="application/json",
-            safety_settings=safety_settings
+        # Disable safety filters for testing angry customer scenarios
+        safety_settings = [
+            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
+            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
+        ]
+
+        response = client_google.models.generate_content(
+            model='gemini-2.0-flash',
+            contents=chat_text,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                temperature=0.0,
+                response_mime_type="application/json",
+                safety_settings=safety_settings
+            )
         )
-    )
+        return json.loads(response.text)
+    except Exception as e:
+        print(f"  [!] Google Gemini failed. Switching to Groq...")
 
-    return json.loads(response.text)
+    # Step 2: Try Groq (Llama 3)
+    try:
+        print("  -> Attempting with Groq...")
+        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        completion = client_groq.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": chat_text}
+            ],
+            temperature=0.0,
+            response_format={"type": "json_object"}
+        )
+        return json.loads(completion.choices[0].message.content)
+    except Exception as e:
+        print(f"  [!] Groq failed. Switching to Cohere...")
+
+    # Step 3: Try to Cohere (V2 API)
+    try:
+        print("  -> Attempting with Cohere (V2)...")
+        co = cohere.ClientV2(api_key=os.getenv("COHERE_API_KEY"))
+
+        # Combine system prompt and user chat for Cohere V2
+        full_prompt = system_prompt + "\n\nChat to analyze:\n" + chat_text
+
+        # Using the new active model
+        response = co.chat(
+            model="command-a-03-2025",
+            messages=[
+                {"role": "user", "content": full_prompt}
+            ],
+            temperature=0.0
+        )
+
+        # Extract the raw text
+        result_text = response.message.content[0].text.strip()
+
+        # Robust JSON extraction: find the first '{' and last '}' to strip markdown/text
+        start_idx = result_text.find('{')
+        end_idx = result_text.rfind('}')
+
+        if start_idx != -1 and end_idx != -1:
+            # Slice the string to keep ONLY the valid JSON structure
+            clean_json_str = result_text[start_idx:end_idx + 1]
+        else:
+            clean_json_str = result_text
+
+        return json.loads(clean_json_str)
+    except Exception as e:
+        print(f"  [!] All APIs failed. Final error: {e}")
+        return {"intent": "error", "satisfaction": "neutral", "quality_score": 0, "agent_mistakes": []}
 
 
 if __name__ == "__main__":
-    # Prevent overwriting the mocked presentation data
-    if os.path.exists("analyzed_dataset.json"):
-        print("Analyzed dataset already exists. Skipping analysis to protect presentation data.")
-        exit()
+    setup_environment()
 
-    # Initialize the AI client
-    ai_client = setup_ai()
-    if not ai_client:
-        exit()
+    # Check if the analyzed file exists, and remove it to start fresh
+    if os.path.exists("analyzed_dataset.json"):
+        print("Analyzed dataset already exists. Deleting old file to start fresh...")
+        os.remove("analyzed_dataset.json")
 
     # Load the generated dataset
     try:
         with open("dataset.json", "r", encoding="utf-8") as f:
             dataset = json.load(f)
     except FileNotFoundError:
-        print("Error: 'dataset.json' not found! Please ensure the file exists.")
+        print("Error: 'dataset.json' not found! Run generate.py first.")
         exit()
 
     analyzed_results = []
-    print(f"Starting analysis of {len(dataset)} chats...\n")
+    print(f"Starting analysis of {len(dataset)} chats with fallback strategy...\n")
 
-    # Loop through each chat and analyze it
     for item in dataset:
         print(f"Analyzing chat #{item['id']}...")
 
-        try:
-            # Get the analysis from Gemini
-            analysis = analyze_chat(ai_client, item['dialogue'])
+        analysis = analyze_chat_with_fallback(item['dialogue'])
+        item['analysis'] = analysis
+        analyzed_results.append(item)
 
-            # Add the analysis to our data
-            item['analysis'] = analysis
-            analyzed_results.append(item)
+        # Save progress incrementally
+        with open("analyzed_dataset.json", "w", encoding="utf-8") as f:
+            json.dump(analyzed_results, f, ensure_ascii=False, indent=4)
 
-            # Save progress incrementally to a new file
-            with open("analyzed_dataset.json", "w", encoding="utf-8") as f:
-                json.dump(analyzed_results, f, ensure_ascii=False, indent=4)
-
-            # Pause to respect API rate limits
-            time.sleep(61)
-
-        except Exception as error:
-            print(f"Error processing chat #{item['id']}: {error}")
+        # Small pause to be polite to the APIs
+        time.sleep(2)
 
     print("\nAnalysis complete! Results saved to 'analyzed_dataset.json'.")

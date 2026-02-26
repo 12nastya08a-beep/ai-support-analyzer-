@@ -1,222 +1,240 @@
 [
-  {
-    "id": 1,
-    "scenario_type": "1. Refund request. Agent makes a mistake. Client is angry.",
-    "dialogue": "Client: I asked for a refund for my canceled order three days ago. Where is the money?\nAgent: Hello! I just checked... Oh, it seems I accidentally clicked 'Reject' instead of 'Refund'. You will have to create a new request.\nClient: Are you kidding me?! You made the mistake, and I have to waste my time again? This is absolutely terrible service!",
-    "analysis": {
-      "intent": "refund_request",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["incorrect_info", "no_resolution"]
+    {
+        "id": 1,
+        "scenario_type": "1. Refund request. Agent makes a mistake. Client is angry.",
+        "dialogue": "Client: I’m absolutely furious right now. I placed an order last week, and it never arrived. I want a full refund immediately!  \n\nAgent: I’m so sorry to hear that, and I completely understand your frustration. Let me pull up your account details to assist you. Could I have your name and order number, please?  \n\nClient: It’s John Miller, order number 789456. And don’t waste my time—just process the refund.  \n\nAgent: Thank you, John. I see your order here. It looks like it was marked as delivered, but I’ll go ahead and process the refund for you. Can you confirm the amount was $120.00?  \n\nClient: Yes, that’s correct. Just do it already!  \n\nAgent: Absolutely, I’ll initiate the refund right now. It should reflect on your statement within 5–7 business days. Is there anything else I can assist you with?  \n\nClient: Wait, what? 5–7 days? Why does it take so long? This is ridiculous!  \n\nAgent: I apologize for the inconvenience, John. Refunds typically take that long due to processing times with banks. I wish I could expedite it, but unfortunately, that’s the standard timeframe.  \n\nClient: This is unacceptable. I’ve been a loyal customer for years, and this is how you treat me? I want to speak to your manager!  \n\nAgent: I’m truly sorry for the frustration, John. Let me see what I can do to make this right. Please give me a moment.  \n\nClient: Fine, but hurry up.  \n\nAgent: Thank you for your patience. I’ve processed the refund, and I’ve also applied a $20 credit to your account as a token of our apology for the delay and inconvenience. You should receive an email confirmation shortly.  \n\nClient: Hmph. That’s more like it. But I’m still not happy about the wait time.  \n\nAgent: I completely understand, and I’ll make sure to document your feedback for improvement. If there’s anything else I can do for you today, please let me know.  \n\nClient: No, that’s it. Just make sure I get that refund.  \n\nAgent: Absolutely, John. I’ll personally follow up to ensure it goes through smoothly. Thank you for bringing this to our attention, and we appreciate your patience. Have a better day.  \n\nClient: Yeah, whatever. Goodbye.  \n\nAgent: Goodbye, John. Take care.",
+        "analysis": {
+            "intent": "refund_request",
+            "satisfaction": "unsatisfied",
+            "quality_score": 3,
+            "agent_mistakes": [
+                "no_resolution",
+                "unnecessary_escalation"
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "scenario_type": "2. Technical error. Agent gives useless links. Sarcasm.",
+        "dialogue": "Client: Hi, I’ve been trying to log into my account for the past hour, but I keep getting a “500 Internal Server Error.” It’s driving me nuts. Can you help?  \n\nAgent: Hi there! Thanks for reaching out. I’m here to help. Have you tried clearing your browser cache? Here’s a link to our troubleshooting guide: [insert useless link]. Let me know if that works!  \n\nClient: Yeah, I tried that already. Three times. The error’s still there. Feels like the server’s having a worse day than I am.  \n\nAgent: Got it! Sometimes it helps to switch browsers. Here’s another link with instructions on how to do that: [insert another useless link]. Give it a shot and let me know!  \n\nClient: Seriously? I’m not tech-illiterate. I switched browsers, cleared cookies, did a rain dance—nothing. This is a server issue, not a “me” issue.  \n\nAgent: I hear you! Another thing you can try is restarting your device. Here’s a helpful article on how to restart properly: [insert third useless link]. Persistence is key!  \n\nClient: Oh, fantastic. Because clearly, my computer doesn’t know how to restart without a step-by-step guide. Look, can we just acknowledge that your end is broken and stop pretending I’m the problem?  \n\nAgent: I totally understand your frustration. Let me check something on my end. In the meantime, have you tried accessing your account from a different device? Here’s a link on how to do that: [insert fourth useless link].  \n\nClient: Unbelievable. Yes, I tried another device. Same error. Can we just escalate this to someone who can actually fix it instead of sending me on a wild goose chase with these links?  \n\nAgent: Of course! I’ll escalate this for you. Just one more thing—have you tried turning it off and on again? Here’s a link with tips: [insert fifth useless link].  \n\nClient: You’ve got to be kidding me. Just escalate it. Please.  \n\nAgent: Absolutely, I’ll get this escalated right away. Apologies for the inconvenience. Thanks for your patience!  \n\nClient: Yeah, thanks. I’ll be over here practicing my deep breathing exercises.",
+        "analysis": {
+            "intent": "technical_error",
+            "satisfaction": "unsatisfied",
+            "quality_score": 1,
+            "agent_mistakes": [
+                "ignored_question",
+                "no_resolution",
+                "unnecessary_escalation"
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "scenario_type": "3. Tariff question. Successful case. Satisfied client.",
+        "dialogue": "**Client:** Hi, I recently switched to your premium plan, but I’m not sure if I’m getting all the benefits listed. Could you help me understand what’s included in the tariff?  \n\n**Agent:** Hello! I’m glad you reached out. Let me pull up your account details to confirm your current plan. Could I have your name or account number, please?  \n\n**Client:** Sure, my name is Sarah Thompson, and my account number is 123456789.  \n\n**Agent:** Thanks, Sarah. I see your account here. You’re currently on our Premium Plan, which includes unlimited data, priority customer support, access to exclusive content, and a 10% discount on partner services. Is there a specific benefit you’re unsure about?  \n\n**Client:** Yes, I was wondering about the exclusive content. I haven’t seen any options for that yet.  \n\n**Agent:** Great question! The exclusive content is accessible through our mobile app under the \"Premium Hub\" section. Let me guide you—once you open the app, go to the menu, scroll down, and you’ll see the Premium Hub icon. Click on it, and you’ll find all the exclusive content there.  \n\n**Client:** Oh, I see it now! I didn’t realize it was in a separate section. Thanks for pointing that out.  \n\n**Agent:** You’re welcome! I’m glad I could help. If you have any more questions or need further assistance, feel free to reach out. We’re here 24/7.  \n\n**Client:** That’s awesome. Thanks again for your help. I’m really happy with the service so far!  \n\n**Agent:** Thank you, Sarah! We appreciate your feedback. Enjoy your Premium Plan, and have a great day!  \n\n**Client:** You too! Goodbye.  \n\n**Agent:** Goodbye!",
+        "analysis": {
+            "intent": "tariff_question",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 4,
+        "scenario_type": "4. Payment issue. Double charge. Perfect resolution.",
+        "dialogue": "**Client:** Hi, I noticed that I was charged twice for my recent order. Can you help me with this?  \n\n**Agent:** Hi there! I’m so sorry for the inconvenience. I can definitely look into this for you. Could you please provide me with your order number or the email associated with your account?  \n\n**Client:** Sure, my order number is #123456789, and my email is john.doe@example.com.  \n\n**Agent:** Thank you, John. I’m pulling up your account now. I see the double charge here—it looks like the system processed two transactions instead of one. I apologize for the mistake.  \n\n**Client:** It’s quite frustrating, especially since it’s a big amount. Can you fix this?  \n\n**Agent:** Absolutely, I’ll take care of this right away. I’ll initiate a refund for the duplicate charge, and you should see it reflected in your account within 3–5 business days. I’ll also ensure this doesn’t happen again by flagging the issue to our technical team.  \n\n**Client:** That’s a relief. Can I get a confirmation email once the refund is processed?  \n\n**Agent:** Of course! I’ll send you a confirmation email with the refund details as soon as it’s completed. Additionally, I’ll apply a 10% discount code to your account as a token of our apology for the trouble caused.  \n\n**Client:** That’s really appreciated. Thank you for your help.  \n\n**Agent:** You’re very welcome, John! I’ve processed the refund and sent the confirmation email. The discount code is already applied to your account for your next purchase. If you have any other questions or need further assistance, feel free to reach out. Have a great day!  \n\n**Client:** Thank you so much. You’ve been a huge help.  \n\n**Agent:** It’s my pleasure! Take care, and I hope you have a wonderful day. Goodbye!",
+        "analysis": {
+            "intent": "payment_issue",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 5,
+        "scenario_type": "5. Account access. Password reset fails. Agent ignores issue.",
+        "dialogue": "Client: Hi, I’m having trouble accessing my account. I tried resetting my password, but the link isn’t working. Can you help me with this?  \n\nAgent: Sure, I can look into that for you. Can you confirm your email address, please?  \n\nClient: Yes, it’s john.doe@example.com. I’ve tried resetting the password three times now, but the link expires before I can use it.  \n\nAgent: Got it. Let me check your account details quickly.  \n\nClient: Okay, take your time.  \n\nAgent: Thanks for waiting. Looks like everything is fine on our end. Maybe try clearing your browser cache?  \n\nClient: I already did that, and I’ve tried two different browsers. The issue is still there. The link just doesn’t work.  \n\nAgent: Hmm, I see. Sometimes it’s an issue with the email provider. Have you checked your spam folder?  \n\nClient: Yes, I checked both my inbox and spam folder. The email arrives, but the link doesn’t work when I click it. Can you manually reset my password or something?  \n\nAgent: I’m not able to do that directly. You’ll need to use the reset link. Maybe try again in a few minutes?  \n\nClient: I’ve been trying for over an hour now. This is really frustrating. Can you escalate this or find another solution? I need access to my account urgently.  \n\nAgent: I understand it’s frustrating, but I’d recommend trying again later. Sometimes these things just take time.  \n\nClient: That’s not helpful at all. I’ve been a customer for years, and this is the only solution you’re offering? Can I speak to a supervisor, please?  \n\nAgent: I’m sorry, but I’m the only one available right now. I’ll note this in your account, and you can try again tomorrow.  \n\nClient: This is unacceptable. I’m going to have to take this further if you can’t resolve this. I need access to my account today.  \n\nAgent: I apologize for the inconvenience. Unfortunately, there’s nothing more I can do at the moment.  \n\nClient: This is terrible customer service. I’ll be contacting your support team again, but I expect a better response. Goodbye.  \n\nAgent: I’m sorry to hear that. Have a good day.",
+        "analysis": {
+            "intent": "account_access",
+            "satisfaction": "unsatisfied",
+            "quality_score": 2,
+            "agent_mistakes": [
+                "no_resolution",
+                "unnecessary_escalation"
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "scenario_type": "6. Other. Physical address request. Quick response.",
+        "dialogue": "Client: Hi, I need to send something to your company via mail. Could you provide me with your physical address?  \n\nAgent: Of course! Our physical address is: 1234 Corporate Drive, Suite 500, Anytown, State, ZIP 12345. Let me know if you need any further assistance!  \n\nClient: Perfect, thanks for the quick help!  \n\nAgent: You’re welcome! Don’t hesitate to reach out if you need anything else. Have a great day!",
+        "analysis": {
+            "intent": "other",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 7,
+        "scenario_type": "7. Technical error. App crashes. Rude agent.",
+        "dialogue": "**Client:** Hi, I’m having a major issue with your app. It keeps crashing every time I try to open it. I’ve uninstalled and reinstalled it three times already, and nothing’s working. Can you help?  \n\n**Agent:** Ugh, another crash complaint. What’s your phone model? Maybe it’s just too old to handle our app.  \n\n**Client:** Excuse me? My phone is only a year old, and it’s a flagship model. I think the issue is on your end. Can you just help me fix it?  \n\n**Agent:** Well, if you’re so sure it’s our fault, why don’t you just switch to a better phone? We can’t cater to every outdated device out there.  \n\n**Client:** That’s incredibly unprofessional. I’m not asking for special treatment—I’m asking for basic support. Can you please escalate this or give me a solution?  \n\n**Agent:** Look, I’m not here to babysit users who can’t even keep their devices updated. Try clearing your cache or something. Next time, make sure your phone can handle our app before complaining.  \n\n**Client:** I’m shocked by your attitude. I’ve been a loyal customer for years, and this is how you treat me? I want to speak to your supervisor immediately.  \n\n**Agent:** Whatever. Hold on. *Places client on hold for 2 minutes.*  \n\n**Agent:** Fine, I’ll “help.” Try force-closing the app and restarting your phone. If that doesn’t work, it’s your problem, not ours.  \n\n**Client:** Unbelievable. I’ll be reporting this interaction. You’ve lost a customer today.  \n\n**Agent:** Good riddance. *Ends call abruptly.*",
+        "analysis": {
+            "intent": "technical_error",
+            "satisfaction": "unsatisfied",
+            "quality_score": 1,
+            "agent_mistakes": [
+                "rude_tone",
+                "no_resolution",
+                "unnecessary_escalation"
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "scenario_type": "8. Refund request. Wrong item. Exception made.",
+        "dialogue": "**Client:** Hi, I received my order today, but the item I got is not what I ordered. I ordered a blue sweater, but I received a red scarf instead. Can you help me with this?  \n\n**Agent:** Hi there! I’m so sorry to hear that. I can understand how frustrating this must be. Let me help you with this. Could I please have your order number or the email associated with your account?  \n\n**Client:** Sure, my order number is #123456789, and my email is john.doe@example.com.  \n\n**Agent:** Thank you, John. I see your order here. It looks like there was a mix-up in our warehouse. I apologize for the inconvenience. Normally, we’d ask you to return the incorrect item first, but since this was our mistake, I’d be happy to process a refund for you immediately. Would that work for you?  \n\n**Client:** That sounds good, but I still need the sweater I originally ordered. Can you send it out as well?  \n\n**Agent:** Absolutely, I can do that for you. As an exception, I’ll process the refund right away and also place a new order for the blue sweater at no additional cost. You should receive a confirmation email for both the refund and the new order shortly.  \n\n**Client:** That’s great, thank you! I appreciate your help.  \n\n**Agent:** You’re very welcome, John! I’ve taken care of everything on my end. You should receive the sweater within 3-5 business days. If there’s anything else you need, feel free to reach out. Have a great day!  \n\n**Client:** Thanks again. You’ve been a big help. Goodbye!  \n\n**Agent:** Goodbye, John! Take care!",
+        "analysis": {
+            "intent": "refund_request",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 9,
+        "scenario_type": "9. Tariff question. Discount request. Free month offered.",
+        "dialogue": "Client: Hi, I’ve been a loyal customer for over a year now, and I recently noticed that you’re offering a new tariff plan with better rates. I’m wondering if there’s any way I could get a discount on my current plan or switch to the new one without any additional fees?  \n\nAgent: Hello! Thank you for being a loyal customer. I appreciate your interest in our new tariff plan. Let me check your account details to see what options are available for you. Could I have your account number or email, please?  \n\nClient: Sure, it’s [account number/email].  \n\nAgent: Thank you. I see your account here. You’ve been with us for 14 months, and your payment history is impeccable. I understand your request for a discount or an upgrade. Let me see what I can do for you.  \n\nClient: Great, I’d really appreciate it. The new plan seems to offer more data for a lower price, and I’d hate to miss out just because I’m on an older plan.  \n\nAgent: I completely understand. I’ve reviewed your account, and as a token of our appreciation for your loyalty, I’d like to offer you one month of service completely free. This should give you some flexibility while we explore the best way to transition you to the new tariff plan.  \n\nClient: Wow, that’s fantastic! A free month is a great gesture. Does that mean I can switch to the new plan after that without any extra charges?  \n\nAgent: Absolutely! The free month will be applied to your next bill, and I’ll also waive any transition fees for switching to the new plan. I’ll make a note on your account to ensure everything goes smoothly.  \n\nClient: That sounds perfect. Thank you so much for your help!  \n\nAgent: You’re very welcome! I’m glad I could assist. The changes will reflect in your next billing cycle. If you have any more questions or need further assistance, feel free to reach out. Have a great day!  \n\nClient: I will. Thanks again, and have a great day too!  \n\nAgent: Thank you, goodbye!",
+        "analysis": {
+            "intent": "tariff_question",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 10,
+        "scenario_type": "10. Payment issue. Card declined. Incorrect info given.",
+        "dialogue": "**Client:** Hi, I tried to make a payment for my order, but it keeps getting declined. I’m sure there’s enough money in my account. Can you help?  \n\n**Agent:** Hi there! I’m sorry to hear you’re having trouble. Let’s get this sorted out. Can you please confirm the last four digits of the card you’re using and the billing address on file?  \n\n**Client:** Sure, the last four digits are 3456, and the address is 123 Maple Street, Apartment 4B, New York, NY, 10001.  \n\n**Agent:** Thanks for that. I’m seeing here that the billing address on file is slightly different—it’s listed as 123 Maple Street, Apartment 4, New York, NY, 10001. Could that be the issue?  \n\n**Client:** Oh, I see! I didn’t realize the apartment number was missing the “B.” That’s probably it.  \n\n**Agent:** It’s a common issue—billing addresses need to match exactly. I’d recommend updating your information and trying the payment again. Would you like me to guide you through updating your billing details?  \n\n**Client:** Yes, please. I’ll fix it right now.  \n\n**Agent:** Great! Just log into your account, go to the “Payment Methods” section, select the card, and update the billing address. Once that’s done, you should be able to complete the payment. Let me know if you run into any more issues.  \n\n**Client:** Okay, I’ve updated it. Let me try the payment again.  \n\n**Agent:** Sounds good. Take your time, and feel free to reach out if you need further assistance.  \n\n**Client:** It worked! Thank you so much for your help.  \n\n**Agent:** Fantastic! I’m glad it’s resolved. If you have any other questions or need help in the future, don’t hesitate to reach out. Have a great day!  \n\n**Client:** You too, thanks again!  \n\n**Agent:** You’re welcome! Take care.",
+        "analysis": {
+            "intent": "payment_issue",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 11,
+        "scenario_type": "11. Account access. Hacked account. Escalation.",
+        "dialogue": "**Client:** Hi, I’m locked out of my account, and I think it’s been hacked. I tried resetting my password, but it’s not working. Can you help?  \n\n**Agent:** I’m so sorry to hear that, and I’ll do my best to assist. Could I have your full name, email address, and any recent order or account numbers you might have? This will help me verify your account.  \n\n**Client:** Sure, my name is John Doe, and my email is johndoe@email.com. I don’t have any recent orders, but I’ve been using the account for over a year.  \n\n**Agent:** Thank you, John. I see your account here. For security purposes, could you please confirm the last four digits of the payment method you’ve used recently?  \n\n**Client:** Uh, I don’t feel comfortable sharing that over chat. Is there another way?  \n\n**Agent:** I completely understand. Let me verify your account details another way. Could you confirm the city where you signed up for the account?  \n\n**Client:** Yeah, it was in Chicago.  \n\n**Agent:** Perfect, John. It looks like there’s been some unusual activity on your account. I’ll need to escalate this to our security team to investigate further. In the meantime, I’ll temporarily lock the account to prevent any further unauthorized access.  \n\n**Client:** Okay, but how long will this take? I need access to my account ASAP.  \n\n**Agent:** I understand the urgency, John. The security team typically responds within 24 to 48 hours. I’ll personally follow up with them to expedite this. Once they’ve secured your account, we’ll guide you through resetting your password and enabling two-factor authentication to prevent this from happening again.  \n\n**Client:** That’s fine, but I’m really worried about my personal information. Can you confirm nothing has been tampered with?  \n\n**Agent:** I’ll make sure the security team checks for any unauthorized changes or data breaches. Rest assured, we take these matters very seriously. I’ll send you an email summarizing our conversation and the steps we’re taking.  \n\n**Client:** Alright, thanks. Please keep me updated.  \n\n**Agent:** Absolutely, John. I’ll be in touch as soon as I have more information. If you have any other questions in the meantime, feel free to reach out. Stay safe, and I apologize for the inconvenience.  \n\n**Client:** Thanks, I appreciate it. Goodbye.  \n\n**Agent:** You’re welcome, John. Goodbye!",
+        "analysis": {
+            "intent": "account_access",
+            "satisfaction": "neutral",
+            "quality_score": 4,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 12,
+        "scenario_type": "12. Technical error. Slow site. Agent is dismissive.",
+        "dialogue": "**Client:** Hi, I’ve been trying to use your website for the past hour, but it’s incredibly slow. Pages are taking forever to load, and sometimes they just time out. Can you help me with this?  \n\n**Agent:** Hmm, sounds like your internet connection might be the issue. Have you tried restarting your router?  \n\n**Client:** Yes, I’ve already done that. My internet is working fine on other sites, so I don’t think it’s my connection. It’s just your site that’s lagging.  \n\n**Agent:** Well, we haven’t received any other reports of slowdowns, so it’s probably on your end. Maybe try clearing your cache or using a different browser.  \n\n**Client:** I’ve tried both of those things already, and it’s still slow. I’m on the latest version of Chrome, and my cache is cleared. It’s really frustrating—I’m trying to place an order, but I can’t even get past the checkout page.  \n\n**Agent:** Honestly, there’s not much I can do if it’s working for everyone else. Maybe try again later? Sometimes these things just happen.  \n\n**Client:** That’s really disappointing. I’ve been a customer for years, and I’ve never had this issue before. Can’t you check if there’s a technical problem on your side?  \n\n**Agent:** Like I said, we’re not seeing any widespread issues. It’s likely something on your device or network. I’d suggest reaching out to your internet provider if it keeps happening.  \n\n**Client:** I guess I’ll have to take my business elsewhere if this can’t be resolved. This level of service isn’t acceptable.  \n\n**Agent:** Sorry to hear that. Let us know if you change your mind. Have a good day.",
+        "analysis": {
+            "intent": "technical_error",
+            "satisfaction": "unsatisfied",
+            "quality_score": 2,
+            "agent_mistakes": [
+                "ignored_question",
+                "no_resolution",
+                "rude_tone"
+            ]
+        }
+    },
+    {
+        "id": 13,
+        "scenario_type": "13. Other. Account deletion. Manipulation attempt.",
+        "dialogue": "**Client:** Hi, I need to delete my account immediately. I’ve been having issues with your service, and I’m just done with it. Can you help me with that?  \n\n**Agent:** I’m sorry to hear you’re experiencing issues. I’d be happy to assist with the account deletion process. Before we proceed, could you please verify your account details—your full name and email address?  \n\n**Client:** Sure, it’s John Doe, email is johndoe@email.com. But listen, I’ve been getting charged for services I didn’t sign up for. If you delete my account, will that stop the charges?  \n\n**Agent:** I understand your concern, John. Let me quickly check your account to ensure there are no pending charges or subscriptions. Could you confirm the last four digits of the payment method on file for verification?  \n\n**Client:** It’s 1234. But honestly, I’m not sure I trust you guys anymore. I’ve heard stories about companies keeping accounts active even after deletion. Can you guarantee this won’t happen?  \n\n**Agent:** I completely understand your hesitation, John. Our policy is to permanently delete accounts upon request, and all associated data is removed within 30 days. However, I can assure you that once the deletion is processed, no further charges will occur. Would you like me to proceed with the deletion now?  \n\n**Client:** Wait, before you do that—if I delete my account, can I still get a refund for the last charge? I mean, since I didn’t authorize it.  \n\n**Agent:** I see. Let me clarify: account deletion and refunds are separate processes. If you believe there’s an unauthorized charge, I’d be happy to investigate that for you. Would you prefer we look into the charge first before deleting the account?  \n\n**Client:** Hmm, I guess that makes sense. But if I keep the account open, will you stop the charges? I don’t want to be billed again.  \n\n**Agent:** Absolutely, John. If there’s an issue with billing, we’ll resolve it immediately. I can place a hold on any future charges while we investigate. Would you like me to do that now?  \n\n**Client:** Okay, fine. But if this doesn’t get fixed, I’m deleting my account for sure. And I’ll make sure to leave a bad review everywhere.  \n\n**Agent:** I appreciate your feedback, John. My priority is to ensure your issue is resolved promptly. I’ll place a hold on future charges and initiate a refund investigation for the last charge. You’ll receive a confirmation email shortly. Is there anything else I can assist you with today?  \n\n**Client:** No, that’s it. Just make sure this gets fixed.  \n\n**Agent:** Absolutely, John. I’ll personally oversee this. You’ll hear back from us within 48 hours. Thank you for bringing this to our attention, and we apologize for any inconvenience. Have a great day!",
+        "analysis": {
+            "intent": "account_access",
+            "satisfaction": "unsatisfied",
+            "quality_score": 4,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 14,
+        "scenario_type": "14. Refund request. Partial refund. Calculation error.",
+        "dialogue": "Client: Hi, I recently received a refund for a purchase, but I think there might be an error in the amount. I was expecting a partial refund, but it seems like the calculation is incorrect.\n\nAgent: I apologize for the inconvenience, and I'll be happy to look into this for you. Could you please provide me with your order number or any other details related to the purchase?\n\nClient: Sure, the order number is #123456789. I originally purchased a bundle of items for $150, but I returned one item worth $50. According to your return policy, I should receive a partial refund of $50 minus a 10% restocking fee, which is $5. So, I was expecting a refund of $45, but I only received $30.\n\nAgent: Thank you for the information. Let me pull up your order details and verify the refund calculation. One moment, please.\n\nClient: Take your time. I just want to make sure I receive the correct amount.\n\nAgent: I've reviewed your order, and it appears there was indeed an error in the refund calculation. Our system mistakenly applied a 20% restocking fee instead of the correct 10%. I'll go ahead and process the correct partial refund for you right away.\n\nClient: That's a relief. I appreciate your help in resolving this issue.\n\nAgent: Absolutely! I've initiated the correct refund of $45 to your original payment method. You should see the updated amount reflected in your account within 3-5 business days. Is there anything else I can assist you with today?\n\nClient: No, that should be all. Thank you for your prompt assistance and for correcting the error.\n\nAgent: You're very welcome! I'm glad I could help. If you have any further questions or concerns, don't hesitate to reach out. Have a great day!\n\nClient: Thank you, you too. Goodbye!\n\nAgent: Goodbye!",
+        "analysis": {
+            "intent": "refund_request",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 15,
+        "scenario_type": "15. Tariff question. Hidden fees. Sarcasm.",
+        "dialogue": "Client: Hi, I just got my latest bill and it’s way higher than I expected. What’s the deal? I thought I signed up for the “No Hidden Fees” plan. Turns out, there’s a whole treasure hunt of charges in here.  \n\nAgent: I’m sorry to hear that, and I appreciate you bringing this to our attention. Let me take a look at your account to see what might be causing the discrepancy. Could I have your account number or phone number, please?  \n\nClient: Sure, it’s [account number]. And while you’re at it, maybe you can explain why “No Hidden Fees” apparently means “Fees So Well-Hidden They’re Practically Invisible.”  \n\nAgent: I understand your frustration, and I’ll do my best to clarify this for you. One moment, please. *After a brief pause* It looks like there’s a regulatory fee, a network maintenance charge, and a “premium service” fee listed here.  \n\nClient: Ah, yes, the infamous “premium service” fee. Because apparently, having a phone number is now a luxury. And the regulatory fee—is that for the privilege of breathing while I’m on a call?  \n\nAgent: I completely get your sarcasm, and I wish I could say these fees are optional, but they’re mandated by regulatory bodies and industry standards. However, I can see if there’s anything we can do to adjust your plan to better fit your needs.  \n\nClient: So, the “No Hidden Fees” plan just means “Fees We Don’t Talk About Until You Get the Bill”? Great marketing, honestly.  \n\nAgent: I’m truly sorry for the confusion. Transparency is something we strive for, but sometimes these fees are unavoidable. Let me see if I can apply a one-time credit to your account as a gesture of goodwill.  \n\nClient: That’d be nice, but it doesn’t change the fact that I feel like I’m paying for a map to find all these extra charges.  \n\nAgent: I’ve applied a $20 credit to your account, and I’ll also send you a detailed breakdown of each fee so you can better understand them moving forward. If there’s anything else I can assist with, please let me know.  \n\nClient: Appreciate the credit, but maybe next time, just call it the “Fees We’ll Surprise You With Later” plan. Save everyone the trouble.  \n\nAgent: I’ll pass your feedback along to our team. Thank you for your patience, and I’m sorry again for the inconvenience. Is there anything else I can help you with today?  \n\nClient: Nope, that’s it. Just keep the hidden fees… well, hidden, I guess.  \n\nAgent: I assure you, we’ll work on making them clearer. Have a great day!",
+        "analysis": {
+            "intent": "tariff_question",
+            "satisfaction": "unsatisfied",
+            "quality_score": 3,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 16,
+        "scenario_type": "16. Payment issue. Promo code fail. Manual fix.",
+        "dialogue": "Client: Hi, I tried to use a promo code for my purchase, but it’s not working. The code is \"SAVE20,\" and it says it’s invalid. Can you help?  \n\nAgent: Hi there! I’m sorry to hear that. Let me assist you with this. Could you please confirm the email address associated with your account so I can pull up the details?  \n\nClient: Sure, it’s john.doe@email.com.  \n\nAgent: Thanks, John. I see your account here. Let me check the promo code \"SAVE20\" for you. One moment, please.  \n\nClient: Take your time.  \n\nAgent: I’ve verified the code, and it looks like it’s still active. However, it seems there’s a system glitch preventing it from applying. I’ll manually apply the discount for you. Could you please confirm the total amount of your order?  \n\nClient: It’s $120.  \n\nAgent: Perfect. I’ll apply the 20% discount right away. You should see the updated total in your cart shortly.  \n\nClient: Great, thanks!  \n\nAgent: All set! The discount has been applied, and your new total is $96. You can proceed with the checkout now. Let me know if you encounter any further issues.  \n\nClient: Just checked, and it’s working now. Thank you so much for your help!  \n\nAgent: You’re very welcome, John! I’m glad I could assist. If you have any other questions, feel free to reach out. Have a great day!  \n\nClient: You too, bye!  \n\nAgent: Goodbye!",
+        "analysis": {
+            "intent": "payment_issue",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 17,
+        "scenario_type": "17. Account access. 2FA issue. Unnecessary personal info.",
+        "dialogue": "**Client:** Hi, I’m having trouble logging into my account. I’ve been using 2FA for a while, but today it’s not working. I keep getting an error message saying the code is invalid. Can you help?  \n\n**Agent:** Hi there! I’m sorry to hear you’re having trouble. I’ll do my best to assist you. To get started, could you please verify your account by providing your email address or username?  \n\n**Client:** Sure, my email is john.doe@example.com. By the way, I’ve tried using both the authenticator app and backup codes, but neither works.  \n\n**Agent:** Thank you, John. I see your account in our system. Before we proceed, for security purposes, could you please confirm your full name and date of birth?  \n\n**Client:** Uh, isn’t my email enough? I don’t feel comfortable sharing my full name and birthday. Can’t you just reset the 2FA for me?  \n\n**Agent:** I understand your concern, John. We need to verify your identity to ensure account security. Rest assured, this information is only used for verification and kept confidential. Could you please provide your full name and date of birth?  \n\n**Client:** I really don’t think that’s necessary. I’ve been a customer for years, and I just need help with the 2FA. Can’t you check my account activity or something instead?  \n\n**Agent:** I appreciate your patience, John. While I understand your hesitation, our security protocols require this verification step. Without it, I’m unable to proceed with assisting you. Would you like to provide the details, or is there anything else I can assist you with today?  \n\n**Client:** Fine, my name is John Doe, and my birthday is October 15, 1985. But I’m not happy about this.  \n\n**Agent:** Thank you for verifying, John. I’ve confirmed your identity. Let’s get this sorted for you. It seems like there might be an issue with your 2FA setup. I’ll disable it temporarily so you can log in, and then we’ll set it up again. Does that work for you?  \n\n**Client:** Yes, that sounds good. Thanks.  \n\n**Agent:** Great! I’ve disabled the 2FA for your account. Please try logging in now. Once you’re in, go to the security settings and re-enable 2FA. If you need any further assistance, feel free to reach out.  \n\n**Client:** Okay, I’m in. Thanks for your help, despite the hassle.  \n\n**Agent:** You’re welcome, John! I’m glad we could resolve this. If you have any other questions or need assistance, don’t hesitate to contact us. Have a great day!  \n\n**Client:** Thanks, you too. Bye.  \n\n**Agent:** Goodbye, John! Take care.",
+        "analysis": {
+            "intent": "account_access",
+            "satisfaction": "neutral",
+            "quality_score": 4,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 18,
+        "scenario_type": "18. Technical error. Video issue. Workaround found.",
+        "dialogue": "**Client:** Hi, I’m having a problem with the video playback on your platform. It keeps freezing every few seconds, and the audio is completely out of sync. I’ve tried restarting the app and my device, but nothing seems to work. Can you help?  \n\n**Agent:** Hi there! I’m sorry to hear you’re experiencing this issue. Thank you for reaching out. Let me guide you through a few troubleshooting steps. First, could you confirm which device and operating system you’re using?  \n\n**Client:** Sure, I’m using an iPhone 12 with the latest iOS version, and the app is fully updated.  \n\n**Agent:** Got it. Next, could you try clearing the app’s cache and data? Sometimes, corrupted cache files can cause playback issues. If you’re unsure how to do that, I can walk you through it.  \n\n**Client:** Okay, I just cleared the cache, but it’s still freezing. The audio is still out of sync too.  \n\n**Agent:** I appreciate your patience. Let’s try one more thing—could you switch to a different internet connection, like mobile data instead of Wi-Fi, or vice versa, and see if that makes a difference?  \n\n**Client:** I switched to mobile data, and it’s working smoothly now! The video isn’t freezing, and the audio is in sync.  \n\n**Agent:** Great news! It seems like the issue might have been related to your Wi-Fi connection. As a workaround, you can use mobile data for now. I’ll also escalate this to our technical team to investigate further and ensure it’s resolved for Wi-Fi users. Thanks for your cooperation!  \n\n**Client:** Thanks for your help! I appreciate it.  \n\n**Agent:** You’re welcome! If you encounter any other issues or have further questions, don’t hesitate to reach out. Have a great day!",
+        "analysis": {
+            "intent": "technical_error",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 19,
+        "scenario_type": "19. Refund request. Policy denial. Polite explanation.",
+        "dialogue": "Client: Hi, I recently purchased a pair of shoes from your online store, but they don’t fit as expected. I’d like to request a refund, please.  \n\nAgent: Hello! I’m sorry to hear the shoes didn’t work out for you. I’ll be happy to assist you with this. Could you please provide me with your order number or email address associated with the purchase?  \n\nClient: Sure, my order number is 123456789, and my email is john.doe@email.com.  \n\nAgent: Thank you for the details. I’ve located your order. I see that the purchase was made 45 days ago. Unfortunately, our refund policy allows returns within 30 days of the purchase date. Since the return window has passed, I’m unable to process a refund at this time.  \n\nClient: Oh, I didn’t realize there was a time limit. Can’t you make an exception? I’ve only worn them once, and they’re in perfect condition.  \n\nAgent: I completely understand your concern, and I appreciate you keeping the shoes in great condition. However, our policies are designed to ensure fairness for all customers, and exceptions can’t be made outside of the specified timeframe. I’d recommend checking our return policy for future purchases to ensure you’re within the eligible period.  \n\nClient: I guess I’ll have to try selling them elsewhere then. Thanks anyway.  \n\nAgent: You’re welcome, and I’m truly sorry I couldn’t assist further. If you have any other questions or need assistance with anything else, feel free to reach out. Have a great day!  \n\nClient: Thanks, you too. Goodbye.  \n\nAgent: Goodbye! Take care.",
+        "analysis": {
+            "intent": "refund_request",
+            "satisfaction": "unsatisfied",
+            "quality_score": 4,
+            "agent_mistakes": []
+        }
+    },
+    {
+        "id": 20,
+        "scenario_type": "20. Tariff question. Upgrade plan. Quick fuss-free fix.",
+        "dialogue": "Client: Hi, I’m currently on the Basic plan, but I’m hitting my data limit every month. Can I upgrade to the Premium plan without any hassle?  \n\nAgent: Hi there! Thanks for reaching out. Yes, upgrading to the Premium plan is quick and easy. I can help you with that right now. Would you like to proceed?  \n\nClient: Yeah, that’d be great. Just make sure there are no hidden fees or anything.  \n\nAgent: Absolutely, no hidden fees—just the standard Premium plan rate. I’ll apply the change for you. It should take less than a minute. Does that work?  \n\nClient: Sounds good. Go ahead.  \n\nAgent: Perfect! Your plan has been upgraded to Premium. You’ll now have unlimited data and all the additional perks. You should see the changes reflected immediately. Anything else I can assist with?  \n\nClient: Nope, that’s it. Thanks for the quick help!  \n\nAgent: You’re welcome! Glad I could assist. Enjoy your upgraded plan, and feel free to reach out if you have any more questions. Have a great day!",
+        "analysis": {
+            "intent": "tariff_question",
+            "satisfaction": "satisfied",
+            "quality_score": 5,
+            "agent_mistakes": []
+        }
     }
-  },
-  {
-    "id": 2,
-    "scenario_type": "2. Technical error. Agent gives useless links. Sarcasm.",
-    "dialogue": "Client: Your app crashes every time I try to open the shopping cart.\nAgent: Good day! I recommend reading our article 'How to use the store' at this link.\nClient: Oh, thank you so much! An article about how to click buttons is exactly what I need when your code is broken. 'Genius' support.",
-    "analysis": {
-      "intent": "technical_error",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["ignored_question", "no_resolution"]
-    }
-  },
-  {
-    "id": 3,
-    "scenario_type": "3. Tariff question. Successful case. Satisfied client.",
-    "dialogue": "Client: Good afternoon. Could you tell me if the 'Premium' plan includes unlimited roaming internet?\nAgent: Hello! Yes, the 'Premium' plan includes 50 GB of unlimited internet in 30 European countries with no extra charges.\nClient: Awesome! Thank you so much for the quick and clear answer. I'll be upgrading to it.",
-    "analysis": {
-      "intent": "tariff_question",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 4,
-    "scenario_type": "4. Payment issue. Double charge. Perfect resolution.",
-    "dialogue": "Client: Good afternoon. My card was charged twice for the same subscription!\nAgent: Good afternoon. I apologize for the inconvenience, this was a system glitch. I see the duplicate transaction and have just initiated a refund for the second amount. The money will be back on your card within 10 minutes.\nClient: Wow, that was fast. Thank you very much, I feel much better now.",
-    "analysis": {
-      "intent": "payment_issue",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 5,
-    "scenario_type": "5. Account access. Password reset fails. Agent ignores issue.",
-    "dialogue": "Client: I can't reset my password, the email just isn't arriving. Please help.\nAgent: Greetings. To log into your account, you need to enter your username and password on the main page.\nClient: I literally just wrote that I CANNOT reset my password because the email won't send! Do you even read what I write?!",
-    "analysis": {
-      "intent": "account_access",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["ignored_question", "no_resolution"]
-    }
-  },
-  {
-    "id": 6,
-    "scenario_type": "6. Other. Physical address request. Quick response.",
-    "dialogue": "Client: Could you tell me the address of your main office in Kyiv?\nAgent: Good day! Our main office is located at 22 Khreshchatyk St., 3rd floor. We are open from 9:00 AM to 6:00 PM on weekdays.\nClient: Thanks for the info.",
-    "analysis": {
-      "intent": "other",
-      "satisfaction": "neutral",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 7,
-    "scenario_type": "7. Technical error. App crashes. Rude agent.",
-    "dialogue": "Client: After the latest update, your program simply won't launch on my phone.\nAgent: It launches for everyone else. Buy yourself a normal modern phone instead of complaining here.\nClient: What?! Is this how you talk to customers? I will be reporting you to your management!",
-    "analysis": {
-      "intent": "technical_error",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["rude_tone", "no_resolution"]
-    }
-  },
-  {
-    "id": 8,
-    "scenario_type": "8. Refund request. Wrong item. Exception made.",
-    "dialogue": "Client: Good day. I received a green t-shirt instead of a blue one. But I already tore off the tag. Is there anything that can be done?\nAgent: Hello! Normally we don't accept items without tags, but since this was our packing mistake, we will make an exception. Send the item back, and we will process the refund.\nClient: I really appreciate your understanding!",
-    "analysis": {
-      "intent": "refund_request",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 9,
-    "scenario_type": "9. Tariff question. Discount request. Free month offered.",
-    "dialogue": "Client: I've been using your service for three years now. Can I get some kind of discount on the annual plan?\nAgent: Good afternoon! We highly value your loyalty. As a long-time customer, I'd be happy to offer you 1 free month when you pay for a year.\nClient: That's a great offer, thank you! I agree.",
-    "analysis": {
-      "intent": "tariff_question",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 10,
-    "scenario_type": "10. Payment issue. Card declined. Incorrect info given.",
-    "dialogue": "Client: Why is my payment not going through? It says 'Declined by bank'.\nAgent: That's because you are located abroad. Our services cannot be paid for from other countries.\nClient: But I am in Kyiv right now! What do you mean abroad? Did you even check the system before writing this?",
-    "analysis": {
-      "intent": "payment_issue",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["incorrect_info", "no_resolution"]
-    }
-  },
-  {
-    "id": 11,
-    "scenario_type": "11. Account access. Hacked account. Escalation.",
-    "dialogue": "Client: Urgent! Someone changed my email and phone number in my account, I can't log in, and my card is linked there!\nAgent: I understand your concern. This is a critical situation. I am immediately blocking your account to protect your funds and escalating your case to the cybersecurity department. They will contact you within 15 minutes.\nClient: Thank you, waiting! Just please make sure they don't charge anything.",
-    "analysis": {
-      "intent": "account_access",
-      "satisfaction": "neutral",
-      "quality_score": 4,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 12,
-    "scenario_type": "12. Technical error. Slow site. Agent is dismissive.",
-    "dialogue": "Client: Your site takes three minutes to load. Do something about it.\nAgent: Everything works fine on our end. Restart your router.\nClient: I've tried from three different devices and two different networks. The problem is on your side!\nAgent: There are no issues on our side.",
-    "analysis": {
-      "intent": "technical_error",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["rude_tone", "ignored_question", "no_resolution"]
-    }
-  },
-  {
-    "id": 13,
-    "scenario_type": "13. Other. Account deletion. Manipulation attempt.",
-    "dialogue": "Client: I want to completely delete my account and all personal data.\nAgent: Oh, why are you leaving us? How about we offer you a 50% discount for the next month? Stay with us!\nClient: I was clear: delete the account. I don't need your discounts, just execute my request.",
-    "analysis": {
-      "intent": "other",
-      "satisfaction": "unsatisfied",
-      "quality_score": 2,
-      "agent_mistakes": ["ignored_question", "unnecessary_escalation"]
-    }
-  },
-  {
-    "id": 14,
-    "scenario_type": "14. Refund request. Partial refund. Calculation error.",
-    "dialogue": "Client: I ordered three items, one didn't arrive. You refunded me $20, but it cost $35!\nAgent: Good day. I apologize, I miscalculated the refund amount because I looked at a different item on your receipt. I will send the remaining $15 right now.\nClient: Please be more careful next time. Waiting for the funds.",
-    "analysis": {
-      "intent": "refund_request",
-      "satisfaction": "neutral",
-      "quality_score": 3,
-      "agent_mistakes": ["incorrect_info"]
-    }
-  },
-  {
-    "id": 15,
-    "scenario_type": "15. Tariff question. Hidden fees. Sarcasm.",
-    "dialogue": "Client: Why was I charged $5 for 'SMS notifications' if I never enabled it?\nAgent: This service is automatically enabled for all new users. You could have disabled it in the settings.\nClient: Oh, what a convenient service you have! Automatically subscribing people to paid garbage and hoping nobody notices. Bravo.",
-    "analysis": {
-      "intent": "tariff_question",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["incorrect_info"]
-    }
-  },
-  {
-    "id": 16,
-    "scenario_type": "16. Payment issue. Promo code fail. Manual fix.",
-    "dialogue": "Client: My BLACKFRIDAY promo code didn't work in the cart, even though it should be valid until the end of the day.\nAgent: Good afternoon. Indeed, I see a system error with this promo code. I have just applied the discount to your order manually. You can proceed to payment.\nClient: Thanks for the quick fix, I see the discount. Paying now.",
-    "analysis": {
-      "intent": "payment_issue",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 17,
-    "scenario_type": "17. Account access. 2FA issue. Unnecessary personal info.",
-    "dialogue": "Client: I lost my phone and can't enter the two-factor authentication code. How do I log in?\nAgent: To regain access, please send us a photo of your ID, tax number, and a bank statement for the last 3 months.\nClient: A bank statement?! Why do you need my financial data just to reset 2FA on a pizza delivery website?!",
-    "analysis": {
-      "intent": "account_access",
-      "satisfaction": "unsatisfied",
-      "quality_score": 1,
-      "agent_mistakes": ["unnecessary_escalation", "incorrect_info"]
-    }
-  },
-  {
-    "id": 18,
-    "scenario_type": "18. Technical error. Video issue. Workaround found.",
-    "dialogue": "Client: Videos on your courses aren't playing for me. It's just a black screen.\nAgent: Good day. We are aware of this issue, the developers are currently fixing it. In the meantime, as a temporary workaround, try disabling hardware acceleration in your browser settings.\nClient: Did that, the video works now! Thanks for the tip.",
-    "analysis": {
-      "intent": "technical_error",
-      "satisfaction": "satisfied",
-      "quality_score": 4,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 19,
-    "scenario_type": "19. Refund request. Policy denial. Polite explanation.",
-    "dialogue": "Client: I want to refund the digital game I bought yesterday.\nAgent: Greetings. Unfortunately, according to our policy, we cannot refund digital goods if the activation key has already been used. I understand this might be frustrating, but those are the terms of the license agreement.\nClient: It's a shame, but rules are rules. Thanks for the reply.",
-    "analysis": {
-      "intent": "refund_request",
-      "satisfaction": "neutral",
-      "quality_score": 4,
-      "agent_mistakes": []
-    }
-  },
-  {
-    "id": 20,
-    "scenario_type": "20. Tariff question. Upgrade plan. Quick fuss-free fix.",
-    "dialogue": "Client: How do I upgrade from the basic plan to the pro plan without losing the days I've already paid for?\nAgent: Good day! I can do this for you right now. The system will automatically recalculate your remaining days and apply them as a discount when upgrading. Do you confirm?\nClient: Yes, I confirm.\nAgent: Done, your plan has been upgraded!\nClient: Thank you!",
-    "analysis": {
-      "intent": "tariff_question",
-      "satisfaction": "satisfied",
-      "quality_score": 5,
-      "agent_mistakes": []
-    }
-  }
 ]
