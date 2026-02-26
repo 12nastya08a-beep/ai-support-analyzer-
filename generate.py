@@ -11,7 +11,9 @@ from dotenv import load_dotenv
 
 
 def setup_client():
-    """Initializes the GenAI client with API key validation."""
+    """
+    Initializes the GenAI client with API key validation.
+    """
     load_dotenv(override=True)
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
@@ -21,7 +23,9 @@ def setup_client():
 
 
 def get_working_model(client):
-    """Detects the best available Flash model version."""
+    """
+    Detects the best available Flash model version.
+    """
     try:
         available_models = [m.name for m in client.models.list()]
         preferred_models = [
@@ -47,7 +51,7 @@ def generate_single_chat(client, model_name, scenario: str) -> str:
     or returns an empty response.
     """
     prompt_instruction = f"""
-    Write a realistic customer support dialogue in Ukrainian.
+    Write a realistic customer support dialogue in English.
     Scenario: {scenario} 
     Format:
     Client: [text]
@@ -65,7 +69,15 @@ def generate_single_chat(client, model_name, scenario: str) -> str:
 
 
 def main():
-    """Main pipeline for generating and saving the dataset."""
+    """
+    Main pipeline for generating and saving the dataset.
+    Checks for an existing dataset to avoid unnecessary API calls or overwriting.
+    """
+    # Prevent overwriting if the file already exists
+    if os.path.exists("dataset.json"):
+        print("Dataset already exists. Skipping generation to save API limits.")
+        return
+
     ai_client = setup_client()
     if not ai_client:
         return
@@ -102,7 +114,6 @@ def main():
         print(f"[{i + 1}/{len(scenarios)}] Generating dialogue...")
 
         try:
-            # Тепер ми просто викликаємо функцію
             chat_text = generate_single_chat(ai_client, target_model, scenario)
 
             generated_dataset.append({
@@ -123,8 +134,8 @@ def main():
             print(f"Skipping scenario {i + 1} due to error: {error_msg}")
 
             if "429" in error_msg:
-                print("Rate limit reached. Waiting 60 seconds...")
-                time.sleep(60)
+                print("Rate limit reached. Waiting 61 seconds...")
+                time.sleep(61)
             continue
 
     print("\nGeneration complete. Data saved to 'dataset.json'.")

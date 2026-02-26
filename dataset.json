@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "scenario_type": "1. Refund request. Agent makes a mistake. Client is angry.",
+        "dialogue": "Client: I asked for a refund for my canceled order three days ago. Where is the money?\nAgent: Hello! I just checked... Oh, it seems I accidentally clicked 'Reject' instead of 'Refund'. You will have to create a new request.\nClient: Are you kidding me?! You made the mistake, and I have to waste my time again? This is absolutely terrible service!"
+    },
+    {
+        "id": 2,
+        "scenario_type": "2. Technical error. Agent gives useless links. Sarcasm.",
+        "dialogue": "Client: Your app crashes every time I try to open the shopping cart.\nAgent: Good day! I recommend reading our article 'How to use the store' at this link.\nClient: Oh, thank you so much! An article about how to click buttons is exactly what I need when your code is broken. 'Genius' support."
+    },
+    {
+        "id": 3,
+        "scenario_type": "3. Tariff question. Successful case. Satisfied client.",
+        "dialogue": "Client: Good afternoon. Could you tell me if the 'Premium' plan includes unlimited roaming internet?\nAgent: Hello! Yes, the 'Premium' plan includes 50 GB of unlimited internet in 30 European countries with no extra charges.\nClient: Awesome! Thank you so much for the quick and clear answer. I'll be upgrading to it."
+    },
+    {
+        "id": 4,
+        "scenario_type": "4. Payment issue. Double charge. Perfect resolution.",
+        "dialogue": "Client: Good afternoon. My card was charged twice for the same subscription!\nAgent: Good afternoon. I apologize for the inconvenience, this was a system glitch. I see the duplicate transaction and have just initiated a refund for the second amount. The money will be back on your card within 10 minutes.\nClient: Wow, that was fast. Thank you very much, I feel much better now."
+    },
+    {
+        "id": 5,
+        "scenario_type": "5. Account access. Password reset fails. Agent ignores issue.",
+        "dialogue": "Client: I can't reset my password, the email just isn't arriving. Please help.\nAgent: Greetings. To log into your account, you need to enter your username and password on the main page.\nClient: I literally just wrote that I CANNOT reset my password because the email won't send! Do you even read what I write?!"
+    },
+    {
+        "id": 6,
+        "scenario_type": "6. Other. Physical address request. Quick response.",
+        "dialogue": "Client: Could you tell me the address of your main office in Kyiv?\nAgent: Good day! Our main office is located at 22 Khreshchatyk St., 3rd floor. We are open from 9:00 AM to 6:00 PM on weekdays.\nClient: Thanks for the info."
+    },
+    {
+        "id": 7,
+        "scenario_type": "7. Technical error. App crashes. Rude agent.",
+        "dialogue": "Client: After the latest update, your program simply won't launch on my phone.\nAgent: It launches for everyone else. Buy yourself a normal modern phone instead of complaining here.\nClient: What?! Is this how you talk to customers? I will be reporting you to your management!"
+    },
+    {
+        "id": 8,
+        "scenario_type": "8. Refund request. Wrong item. Exception made.",
+        "dialogue": "Client: Good day. I received a green t-shirt instead of a blue one. But I already tore off the tag. Is there anything that can be done?\nAgent: Hello! Normally we don't accept items without tags, but since this was our packing mistake, we will make an exception. Send the item back, and we will process the refund.\nClient: I really appreciate your understanding!"
+    },
+    {
+        "id": 9,
+        "scenario_type": "9. Tariff question. Discount request. Free month offered.",
+        "dialogue": "Client: I've been using your service for three years now. Can I get some kind of discount on the annual plan?\nAgent: Good afternoon! We highly value your loyalty. As a long-time customer, I'd be happy to offer you 1 free month when you pay for a year.\nClient: That's a great offer, thank you! I agree."
+    },
+    {
+        "id": 10,
+        "scenario_type": "10. Payment issue. Card declined. Incorrect info given.",
+        "dialogue": "Client: Why is my payment not going through? It says 'Declined by bank'.\nAgent: That's because you are located abroad. Our services cannot be paid for from other countries.\nClient: But I am in Kyiv right now! What do you mean abroad? Did you even check the system before writing this?"
+    },
+    {
+        "id": 11,
+        "scenario_type": "11. Account access. Hacked account. Escalation.",
+        "dialogue": "Client: Urgent! Someone changed my email and phone number in my account, I can't log in, and my card is linked there!\nAgent: I understand your concern. This is a critical situation. I am immediately blocking your account to protect your funds and escalating your case to the cybersecurity department. They will contact you within 15 minutes.\nClient: Thank you, waiting! Just please make sure they don't charge anything."
+    },
+    {
+        "id": 12,
+        "scenario_type": "12. Technical error. Slow site. Agent is dismissive.",
+        "dialogue": "Client: Your site takes three minutes to load. Do something about it.\nAgent: Everything works fine on our end. Restart your router.\nClient: I've tried from three different devices and two different networks. The problem is on your side!\nAgent: There are no issues on our side."
+    },
+    {
+        "id": 13,
+        "scenario_type": "13. Other. Account deletion. Manipulation attempt.",
+        "dialogue": "Client: I want to completely delete my account and all personal data.\nAgent: Oh, why are you leaving us? How about we offer you a 50% discount for the next month? Stay with us!\nClient: I was clear: delete the account. I don't need your discounts, just execute my request."
+    },
+    {
+        "id": 14,
+        "scenario_type": "14. Refund request. Partial refund. Calculation error.",
+        "dialogue": "Client: I ordered three items, one didn't arrive. You refunded me $20, but it cost $35!\nAgent: Good day. I apologize, I miscalculated the refund amount because I looked at a different item on your receipt. I will send the remaining $15 right now.\nClient: Please be more careful next time. Waiting for the funds."
+    },
+    {
+        "id": 15,
+        "scenario_type": "15. Tariff question. Hidden fees. Sarcasm.",
+        "dialogue": "Client: Why was I charged $5 for 'SMS notifications' if I never enabled it?\nAgent: This service is automatically enabled for all new users. You could have disabled it in the settings.\nClient: Oh, what a convenient service you have! Automatically subscribing people to paid garbage and hoping nobody notices. Bravo."
+    },
+    {
+        "id": 16,
+        "scenario_type": "16. Payment issue. Promo code fail. Manual fix.",
+        "dialogue": "Client: My BLACKFRIDAY promo code didn't work in the cart, even though it should be valid until the end of the day.\nAgent: Good afternoon. Indeed, I see a system error with this promo code. I have just applied the discount to your order manually. You can proceed to payment.\nClient: Thanks for the quick fix, I see the discount. Paying now."
+    },
+    {
+        "id": 17,
+        "scenario_type": "17. Account access. 2FA issue. Unnecessary personal info.",
+        "dialogue": "Client: I lost my phone and can't enter the two-factor authentication code. How do I log in?\nAgent: To regain access, please send us a photo of your ID, tax number, and a bank statement for the last 3 months.\nClient: A bank statement?! Why do you need my financial data just to reset 2FA on a pizza delivery website?!"
+    },
+    {
+        "id": 18,
+        "scenario_type": "18. Technical error. Video issue. Workaround found.",
+        "dialogue": "Client: Videos on your courses aren't playing for me. It's just a black screen.\nAgent: Good day. We are aware of this issue, the developers are currently fixing it. In the meantime, as a temporary workaround, try disabling hardware acceleration in your browser settings.\nClient: Did that, the video works now! Thanks for the tip."
+    },
+    {
+        "id": 19,
+        "scenario_type": "19. Refund request. Policy denial. Polite explanation.",
+        "dialogue": "Client: I want to refund the digital game I bought yesterday.\nAgent: Greetings. Unfortunately, according to our policy, we cannot refund digital goods if the activation key has already been used. I understand this might be frustrating, but those are the terms of the license agreement.\nClient: It's a shame, but rules are rules. Thanks for the reply."
+    },
+    {
+        "id": 20,
+        "scenario_type": "20. Tariff question. Upgrade plan. Quick fuss-free fix.",
+        "dialogue": "Client: How do I upgrade from the basic plan to the pro plan without losing the days I've already paid for?\nAgent: Good day! I can do this for you right now. The system will automatically recalculate your remaining days and apply them as a discount when upgrading. Do you confirm?\nClient: Yes, I confirm.\nAgent: Done, your plan has been upgraded!\nClient: Thank you!"
+    }
+]
