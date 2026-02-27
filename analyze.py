@@ -1,6 +1,6 @@
 """
 Script to analyze customer support chats from a JSON dataset.
-Uses a fallback strategy: Google Gemini -> Groq -> Cohere.
+Uses a fallback strategy: Cohere -> Google Gemini -> Groq.
 Outputs a new JSON file with intent, satisfaction, quality_score, and agent_mistakes.
 """
 
@@ -37,51 +37,7 @@ def analyze_chat_with_fallback(chat_text: str) -> dict:
     - "agent_mistakes": (list: ignored_question, incorrect_info, rude_tone, no_resolution, unnecessary_escalation. Leave empty [] if none)
     """
 
-    # Step 1: Try Google Gemini
-    try:
-        print("  -> Attempting with Google Gemini...")
-        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-
-        # Disable safety filters for testing angry customer scenarios
-        safety_settings = [
-            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
-            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
-        ]
-
-        response = client_google.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=chat_text,
-            config=types.GenerateContentConfig(
-                system_instruction=system_prompt,
-                temperature=0.0,
-                response_mime_type="application/json",
-                safety_settings=safety_settings
-            )
-        )
-        return json.loads(response.text)
-    except Exception as e:
-        print(f"  [!] Google Gemini failed. Switching to Groq...")
-
-    # Step 2: Try Groq (Llama 3)
-    try:
-        print("  -> Attempting with Groq...")
-        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        completion = client_groq.chat.completions.create(
-            model="llama3-8b-8192",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": chat_text}
-            ],
-            temperature=0.0,
-            response_format={"type": "json_object"}
-        )
-        return json.loads(completion.choices[0].message.content)
-    except Exception as e:
-        print(f"  [!] Groq failed. Switching to Cohere...")
-
-    # Step 3: Try to Cohere (V2 API)
+    # Step 1: Try to Cohere (V2 API)
     try:
         print("  -> Attempting with Cohere (V2)...")
         co = cohere.ClientV2(api_key=os.getenv("COHERE_API_KEY"))
@@ -112,6 +68,49 @@ def analyze_chat_with_fallback(chat_text: str) -> dict:
             clean_json_str = result_text
 
         return json.loads(clean_json_str)
+    except Exception as e:
+        print(f"  [!] Cohere failed. Switching to Google Gemini...")
+
+    # Step 2: Try Google Gemini
+    try:
+        print("  -> Attempting with Google Gemini...")
+        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+
+        # Disable safety filters for testing angry customer scenarios
+        safety_settings = [
+            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
+            types.SafetySetting(category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE),
+        ]
+
+        response = client_google.models.generate_content(
+            model='gemini-2.5-flash-lite',
+            contents=chat_text,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                temperature=0.0,
+                response_mime_type="application/json",
+                safety_settings=safety_settings
+            )
+        )
+        return json.loads(response.text)
+    except Exception as e:
+        print(f"  [!] Google Gemini failed. Switching to Groq...")
+        # Step 3: Try Groq (Llama 3)
+    try:
+        print("  -> Attempting with Groq...")
+        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        completion = client_groq.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": chat_text}
+            ],
+            temperature=0.0,
+            response_format={"type": "json_object"}
+        )
+        return json.loads(completion.choices[0].message.content)
     except Exception as e:
         print(f"  [!] All APIs failed. Final error: {e}")
         return {"intent": "error", "satisfaction": "neutral", "quality_score": 0, "agent_mistakes": []}

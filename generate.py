@@ -1,6 +1,6 @@
 """
 Script to generate synthetic customer support chats using LLMs.
-Uses a fallback strategy: Google Gemini -> Groq -> Cohere.
+Uses a fallback strategy: Cohere -> Google Gemini -> Groq.
 Covers various scenarios and outputs English dialogues.
 """
 
@@ -35,36 +35,7 @@ def generate_single_chat_with_fallback(scenario: str) -> str:
     Client: [text]
     Agent: [text]
     """
-
-    # Step 1: Try Google Gemini
-    try:
-        print("  -> Generating with Google Gemini...")
-        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-        response = client_google.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=prompt_instruction,
-        )
-        if response and response.text:
-            return response.text.strip()
-    except Exception as e:
-        print(f"  [!] Google Gemini failed. Switching to Groq...")
-
-    # Step 2: Try Groq (Llama 3)
-    try:
-        print("  -> Generating with Groq...")
-        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        completion = client_groq.chat.completions.create(
-            model="llama3-8b-8192",
-            messages=[
-                {"role": "user", "content": prompt_instruction}
-            ],
-            temperature=0.7
-        )
-        return completion.choices[0].message.content.strip()
-    except Exception as e:
-        print(f"  [!] Groq failed. Switching to Cohere...")
-
-    # Step 3: Try to Cohere (V2 API)
+    # Step 1: Try to Cohere (V2 API)
     try:
         print("  -> Generating with Cohere (V2)...")
         co = cohere.ClientV2(api_key=os.getenv("COHERE_API_KEY"))
@@ -79,7 +50,35 @@ def generate_single_chat_with_fallback(scenario: str) -> str:
         # Extract the text from the V2 response structure
         return response.message.content[0].text.strip()
     except Exception as e:
+        print(f"  [!] Cohere failed. Switching to Google Gemini...")
+    # Step 2: Try Google Gemini
+    try:
+        print("  -> Generating with Google Gemini...")
+        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+        response = client_google.models.generate_content(
+            model='gemini-2.5-flash-lite',
+            contents=prompt_instruction,
+        )
+        if response and response.text:
+            return response.text.strip()
+    except Exception as e:
+        print(f"  [!] Google Gemini failed. Switching to Groq...")
+
+    # Step 3: Try Groq (Llama 3)
+    try:
+        print("  -> Generating with Groq...")
+        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        completion = client_groq.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {"role": "user", "content": prompt_instruction}
+            ],
+            temperature=0.7
+        )
+        return completion.choices[0].message.content.strip()
+    except Exception as e:
         print(f"  [!] All APIs failed. Final error: {e}")
+
         return "Client: Error generating chat.\nAgent: Please check API keys."
 
 
