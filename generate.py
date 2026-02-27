@@ -1,77 +1,99 @@
 """
-Script to generate synthetic customer support chats using LLM.
-Covers various scenarios: payment, tech issues, refunds.
+Script to generate synthetic customer support chats using LLMs.
+Uses a fallback strategy: Cohere -> Google Gemini -> Groq.
+Covers various scenarios and outputs English dialogues.
 """
 
 import os
 import json
 import time
-from google import genai
+
 from dotenv import load_dotenv
+from google import genai
+from groq import Groq
+import cohere
 
 
-def setup_client():
-    """Initializes the GenAI client with API key validation."""
-    load_dotenv(override=True)
-    api_key = os.getenv("GOOGLE_API_KEY")
-    if not api_key:
-        print("Error: GOOGLE_API_KEY is missing!")
-        return None
-    return genai.Client(api_key=api_key)
-
-
-def get_working_model(client):
-    """Detects the best available Flash model version."""
-    try:
-        available_models = [m.name for m in client.models.list()]
-        preferred_models = [
-            'gemini-2.0-flash',
-            'gemini-1.5-flash-002',
-            'gemini-1.5-flash'
-        ]
-        for preferred in preferred_models:
-            if (preferred in available_models or f"models/{preferred}" in
-                    available_models):
-                return preferred
-        for m in available_models:
-            if "flash" in m.lower():
-                return m
-    except Exception as e:
-        print(f"Failed to retrieve model list: {e}")
-    return "gemini-1.5-flash"
-
-
-def generate_single_chat(client, model_name, scenario: str) -> str:
+def setup_environment():
     """
-    Generates dialogue. Raises an Exception if the API fails
-    or returns an empty response.
+    Loads environment variables from the .env file.
+    Must be called before initializing any API clients.
+    """
+    load_dotenv(override=True)
+
+
+def generate_single_chat_with_fallback(scenario: str) -> str:
+    """
+    Generates a dialogue using multiple API providers.
+    Uses Cohere V2 API for the final fallback.
+    Returns the generated chat string.
     """
     prompt_instruction = f"""
-    Write a realistic customer support dialogue in Ukrainian.
+    Write a realistic customer support dialogue in ENGLISH.
     Scenario: {scenario} 
-    Format:
+    Format exactly like this:
     Client: [text]
     Agent: [text]
     """
-    response = client.models.generate_content(
-        model=model_name,
-        contents=prompt_instruction,
-    )
+ # Step 1: Try to Cohere (V2 API)
+    try:
+        print("  -> Generating with Cohere (V2)...")
+        co = cohere.ClientV2(api_key=os.getenv("COHERE_API_KEY"))
 
-    if response and response.text:
-        return response.text.strip()
+        response = co.chat(
+            model="command-a-03-2025",
+            messages=[
+                {"role": "user", "content": prompt_instruction}
+            ],
+            temperature=0.7
+        )
+        # Extract the text from the V2 response structure
+        return response.message.content[0].text.strip()
+    except Exception as e:
+        print(f"  [!] Cohere failed. Switching to Google Gemini...")
+    # Step 2: Try Google Gemini
+    try:
+        print("  -> Generating with Google Gemini...")
+        client_google = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+        response = client_google.models.generate_content(
+            model='gemini-2.5-flash-lite',
+            contents=prompt_instruction,
+        )
+        if response and response.text:
+            return response.text.strip()
+    except Exception as e:
+        print(f"  [!] Google Gemini failed. Switching to Groq...")
 
-    raise Exception("Empty response or blocked by safety filters")
+    # Step 3: Try Groq (Llama 3)
+    try:
+        print("  -> Generating with Groq...")
+        client_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        completion = client_groq.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {"role": "user", "content": prompt_instruction}
+            ],
+            temperature=0.7
+        )
+        return completion.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"  [!] All APIs failed. Final error: {e}")
+
+   
+        return "Client: Error generating chat.\nAgent: Please check API keys."
 
 
 def main():
-    """Main pipeline for generating and saving the dataset."""
-    ai_client = setup_client()
-    if not ai_client:
-        return
+    """
+    Main pipeline for generating and saving the dataset.
+    Deletes the old dataset to start fresh.
+    """
+    setup_environment()
 
-    target_model = get_working_model(ai_client)
-    print(f"Using model: {target_model}")
+    # Check if the file exists, and remove it to start fresh
+    if os.path.exists("dataset.json"):
+        print("Dataset already exists. Deleting old file and generating new data...")
+        os.remove("dataset.json")
 
     scenarios = [
         "1. Refund request. Agent makes a mistake. Client is angry.",
@@ -97,35 +119,23 @@ def main():
     ]
 
     generated_dataset = []
+    print(f"Starting generation of {len(scenarios)} chats with fallback strategy...\n")
 
     for i, scenario in enumerate(scenarios):
-        print(f"[{i + 1}/{len(scenarios)}] Generating dialogue...")
+        print(f"[{i + 1}/{len(scenarios)}] Processing scenario...")
 
-        try:
-            # Тепер ми просто викликаємо функцію
-            chat_text = generate_single_chat(ai_client, target_model, scenario)
+        chat_text = generate_single_chat_with_fallback(scenario)
 
-            generated_dataset.append({
-                "id": i + 1,
-                "scenario_type": scenario,
-                "dialogue": chat_text
-            })
+        generated_dataset.append({
+            "id": i + 1,
+            "scenario_type": scenario,
+            "dialogue": chat_text
+        })
 
-            # Save progress incrementally
-            with open("dataset.json", "w", encoding="utf-8") as file:
-                json.dump(generated_dataset, file, ensure_ascii=False,
-                          indent=4)
+        with open("dataset.json", "w", encoding="utf-8") as file:
+            json.dump(generated_dataset, file, ensure_ascii=False, indent=4)
 
-            time.sleep(4)
-
-        except Exception as e:
-            error_msg = str(e)
-            print(f"Skipping scenario {i + 1} due to error: {error_msg}")
-
-            if "429" in error_msg:
-                print("Rate limit reached. Waiting 60 seconds...")
-                time.sleep(60)
-            continue
+        time.sleep(2)
 
     print("\nGeneration complete. Data saved to 'dataset.json'.")
 
