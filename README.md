@@ -2,7 +2,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![LLM: Multi-Model](https://img.shields.io/badge/LLM-Cohere%20%7C%20Gemini%20%7C%20Groq-orange.svg)](https://cohere.com/)
-[![Docker: Ready](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/dariatrukhan/ai-support-analyzer)
+[![Docker: click to follow url](https://img.shields.io/badge/docker-click%20to%20follow%20url-blue.svg)](https://hub.docker.com/r/dariatrukhan/ai-support-analyzer)
 
 > **AI Support Analyzer** - is an intelligent system designed for automated generation and analysis of customer support dialogues.
 
@@ -13,7 +13,7 @@ _The project leverages state-of-the-art Large Language Models (LLMs) to evaluate
 - **Anastasiia Mykytiuk** - Architecture & Repo Setup
 - **Darya Miroshnichenko** - Prompt Engineering & Data Generation
 - **Daryna Bogaevska** - Backend Logic, AI Analysis, Multi-LLM Fallback & Docker Support
-- **Daria Trukhan** - QA & Documentation
+- **Daria Trukhan** - QA & Documentation, Docker Support
 
 ---
 
@@ -55,7 +55,7 @@ The project consists of two core modules:
 
 ### 1. Environment Preparation
 
-Create a `.env` file in the root directory and add your API keys:
+Create a `.env` file in a new folder (better to make new one) and add your API keys:
 
 ```env
 COHERE_API_KEY=your_cohere_key
@@ -76,19 +76,25 @@ You can run this project either using Docker (recommended for a quick start) or 
     Create a .env file and add your keys
     _(written above)_
 
-2.  #### Generate Data:
+2.  #### 📥 Pull the Image (download the latest version of the image from Docker Hub):
 
     ```Bash
-    docker run -it --env-file .env -v $(pwd):/app dariatrukhan/ai-support-analyzer python generate.py
+    docker pull dariatrukhan/ai-support-analyzer:latest
     ```
 
-3.  #### Analyze Data:
+3.  #### Generate Data:
 
     ```Bash
-    docker run -it --env-file .env -v $(pwd):/app dariatrukhan/ai-support-analyzer python analyze.py
+    docker run -it --env-file .env -v "$(pwd):/app_data" dariatrukhan/ai-support-analyzer bash -c "python generate.py && cp dataset.json /app_data/" #use {PWD} for Windows
     ```
 
-    _The results (`dataset.json` and `analyzed_dataset.json`) will appear in your current folder._
+4.  #### Analyze Data:
+
+    ```Bash
+    docker run -it --env-file .env -v "$(pwd):/app_data" dariatrukhan/ai-support-analyzer bash -c "python analyze.py && cp analyzed_dataset.json /app_data/" #use {PWD} for Windows
+    ```
+
+#### _The results (`dataset.json` and `analyzed_dataset.json`) will appear in your current folder._
 
 ### Option 2: Local Python Setup
 
@@ -111,22 +117,23 @@ Use this method if you want to modify the code or run it natively.
    ```
 
 3. #### Configure Environment:
+
    Create a .env file and add your keys
    _(written above)_
 
-## Execution:
+4. #### Execution:
 
-To generate dialogues:
+- To generate dialogues:
 
-```bash
-python generate.py #python33 generate.py for Mac
-```
+  ```bash
+  python generate.py #python3 generate.py for Mac
+  ```
 
-To analyze dialogues:
+- To analyze dialogues:
 
-```bash
-python analyze.py #python3 analyze.py for Mac
-```
+  ```bash
+  python analyze.py #python3 analyze.py for Mac
+  ```
 
 ## 🛠 Troubleshooting
 
